@@ -25,20 +25,6 @@ public final class Constants {
     // Current limit for drivetrain motors. 60A is a reasonable maximum to reduce
     // likelihood of tripping breakers or damaging CIM motors
     public static final int DRIVE_MOTOR_CURRENT_LIMIT = 60;
-    
-    // Drive geometry and encoder constants (needed for odometry / path following).
-    // Adjust these to match your robot's real measurements.
-    // Track width: distance between left/right wheels (meters)
-  public static final double TRACK_WIDTH_METERS = 0.546; // derived from provided module offsets (0.273m each side)
-  // Wheel diameter in meters (wheel radius was 0.048 m in the PathPlanner config)
-  public static final double WHEEL_DIAMETER_METERS = 0.096; // 2 * 0.048
-  // Drive gearing: motor rotations per wheel rotation (from PathPlanner / gearbox config)
-  public static final double DRIVE_GEARING = 5.143; // motorRev : wheelRev
-  // Convenience conversion: meters traveled per one motor revolution
-  public static final double METERS_PER_MOTOR_REV = Math.PI * WHEEL_DIAMETER_METERS / DRIVE_GEARING;
-  // If you use encoder counts (CPR) put that here (placeholder). Many SparkMax wrappers return
-  // rotations/position as motor rotations, so METERS_PER_MOTOR_REV is often enough.
-  public static final double ENCODER_PULSES_PER_REV = 1.0; // placeholder - update if using raw ticks
   }
 
   public static final class FuelConstants {

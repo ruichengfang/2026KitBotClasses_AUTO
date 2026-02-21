@@ -11,6 +11,8 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command.*;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.FuelConstants.*;
 
@@ -62,6 +64,10 @@ public class CANFuelSubsystem extends SubsystemBase {
     intakeLauncherRoller.set(0);
   }
 
+  public Command intakecommand(double voltage) {
+    setFeederRoller(voltage);
+    return null;
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -4,14 +4,17 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import static frc.robot.Constants.OperatorConstants.*;
+import static frc.robot.Constants.OperatorConstants.DRIVER_CONTROLLER_PORT;
+import static frc.robot.Constants.OperatorConstants.OPERATOR_CONTROLLER_PORT;
 import frc.robot.commands.Drive;
 import frc.robot.commands.Eject;
-import frc.robot.commands.ExampleAuto;
 import frc.robot.commands.Intake;
 import frc.robot.commands.LaunchSequence;
 import frc.robot.subsystems.CANDriveSubsystem;
@@ -33,7 +36,7 @@ public class RobotContainer {
       OPERATOR_CONTROLLER_PORT);
 
   // 自动程序选择器 - 用于在Dashboard上选择不同的自动程序
-  private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+  private final SendableChooser<Command> autoChooser = AutoBuilder.buildAutoChooser();
 
   /**
    * 机器人容器构造函数
@@ -45,12 +48,14 @@ public class RobotContainer {
    * 这是机器人启动时调用的第一个方法之一，完成所有初始化工作
    */
   public RobotContainer() {
+    NamedCommands.registerCommand("start",fuelSubsystem.intakecommand(10));
+    NamedCommands.registerCommand("stop",fuelSubsystem.intakecommand(0));
     // 配置按钮与命令的绑定关系
     configureBindings();
 
     // 设置Dashboard上显示的自动模式选项
     // 如果添加额外的自动模式，可以使用autoChooser.addOption添加更多行
-    autoChooser.setDefaultOption("Autonomous", new ExampleAuto(driveSubsystem, fuelSubsystem));
+   // autoChooser.setDefaultOption("Autonomous", new PathPlannerAuto("Example Auto"));
   }
 
 
@@ -94,9 +99,12 @@ public class RobotContainer {
    * 选择器允许驾驶员在比赛前通过Dashboard选择不同的自动策略
    */
   public Command getAutonomousCommand() {
-
+    // This method loads the auto when it is called, however, it is recommended
+    // to first load your paths/autos when code starts, then return the
+    // pre-loaded auto/path
+    return new PathPlannerAuto("test");
+  }
+  public Command getautoinit(){
     return autoChooser.getSelected();
   }
-
-
 }
